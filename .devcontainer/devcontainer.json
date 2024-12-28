@@ -1,0 +1,40 @@
+{
+    "name": "Rust Development Environment",
+    "image": "mcr.microsoft.com/devcontainers/rust:latest",
+    
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {},
+        "ghcr.io/devcontainers/features/github-cli:1": {}
+    },
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "rust-lang.rust-analyzer",
+                "serayuzgur.crates",
+                "vadimcn.vscode-lldb",
+                "tamasfe.even-better-toml",
+                "streetsidesoftware.code-spell-checker"
+            ],
+            "settings": {
+                "editor.formatOnSave": true,
+                "rust-analyzer.checkOnSave.command": "clippy",
+                "rust-analyzer.inlayHints.enable": true,
+                "rust-analyzer.inlayHints.typeHints.enable": true,
+                "rust-analyzer.inlayHints.parameterHints.enable": true
+            }
+        }
+    },
+
+    "remoteUser": "vscode",
+    
+    "postCreateCommand": "rustc --version && cargo --version && rustup component add clippy rustfmt",
+    
+    "mounts": [
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.cargo/registry,target=/usr/local/cargo/registry,type=bind,consistency=cached"
+    ],
+
+    "remoteEnv": {
+        "RUST_BACKTRACE": "1"
+    }
+}
